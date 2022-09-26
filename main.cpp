@@ -23,7 +23,7 @@ struct sufijo {
 };
 
 //Función que compara dos sufijos, recibe dos estructuras sufijo y retorna un valor entero. 
-int comparacion(struct sufijo a, struct sufijo b) {
+int comparacion(sufijo a, sufijo b) {
 	if ((strcmp(a.sufijo, b.sufijo)) < 0) {
 		return 1;
 	}
