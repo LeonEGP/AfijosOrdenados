@@ -102,17 +102,18 @@ int main() {
     cout << "INGRESA EL PATRON A BUSCAR: " << endl;
     cin >> busqueda;
 
-    int locArray[palabra.size()];
-    int index = -1;
-
+    //Creación e impresión del Arreglo de sufijos.
     int suffArr[palabra.size()];
     fillSuffixArray(palabra, suffArr);
-
     espacio();
     cout << "ARREGLO DE SUFIJOS GENERADO:" << endl;
     mostrarArreglo(suffArr, palabra.length());
-
     espacio();
+
+    //Muestra del Índice del Patrón buscado.
+
+    int locArray[palabra.size()];
+    int index = -1;
     suffixArraySearch(palabra, busqueda, suffArr, locArray, &index);
 
     if (index == -1){
