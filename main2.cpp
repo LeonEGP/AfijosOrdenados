@@ -16,72 +16,88 @@ void espacio() {
 }
 
 //Creación de la Estructura "Sufijo".
-struct suffix {
-    int index;
-    string suff;
+struct sufijo {
+    int indice;
+    string sufi;
 };
 
 //Función auxiliar para la comparación de dos strings, recibe dos strings, un valor entero n y retorna un valor entero. 
-int strCompare(string st1, string st2, int n) {
+int comparacionStrings(string string1, string string2, int n) {
     int i = 0;
     while (n--) {
-        if (st1[i] != st2[i])
-            return st1[i] - st2[i];
-        i++;
+        if (string1[i] != string2[i]) {
+            return string1[i] - string2[i];
+        }
+        else {
+            i++;
+        }
     }
     return 0;
 }
 
-//Funciónn que compara dos strings, recibe dos estructuras sufijo, y retorna un valor booleano. 
-bool comp(suffix suff1, suffix suff2) {
-    if (suff1.suff < suff2.suff)
+//Función que compara dos strings, recibe dos estructuras sufijo, y retorna un valor booleano. 
+bool comparacionSufijos(sufijo sufijo1, sufijo sufijo2) {
+    if (sufijo1.sufi < sufijo2.sufi) {
         return true;
-    return false;
+    }
+    else {
+        return false;
+    }
 }
 
 //Función que crea el Arreglo de Sufijos de una palabra dada, también tomo como parámetro el tamaño n de la misma y retorna el Arreglo de Sufijos.
-void fillSuffixArray(string mainString, int suffArr[]) {
-    int n = mainString.size();
-    suffix allSuffix[n];
+void arregloDeSufijos(string palabra, sufijo arregloSufijos[]) {
+    int n = palabra.size();
+    sufijo sufijos[n];
 
     for (int i = 0; i < n; i++) {
-        allSuffix[i].index = i;
-        allSuffix[i].suff = mainString.substr(i);
+        sufijos[i].indice = i;
+        sufijos[i].sufi = palabra.substr(i);
     }
 
-    sort(allSuffix, allSuffix + n, comp);
-    for (int i = 0; i < n; i++){
-        suffArr[i] = allSuffix[i].index;
+    sort(sufijos, sufijos + n, comparacionSufijos);
+
+    for (int j = 0; j < n; j++) {
+        arregloSufijos[j].indice= sufijos[j].indice;
+        arregloSufijos[j].sufi = sufijos[j].sufi;
     }
 }
 
 //Función que implementa la busqueda binaria sobre el Arreglo de Sufijos, recibe el arreglo de la búsqueda, el de la palábra, recibe el Arreglo de Sufijos y las longitudes de la palábra búsqueda, n y m (respectivamente).
-void suffixArraySearch(string mainString, string pattern, int suffArr[], int array[], int* index) {
-    int patLen = pattern.size();
-    int strLen = mainString.size();
-    int left = 0, right = strLen - 1;    //left and right for binary search
+void buscar(string palabra, string busqueda, sufijo arregloSufijos[], int arregloBusqueda[], int* indice) {
+    int longitudBusqueda;
+    int longitudPalabra;
+    int izquierda;
+    int derecha;
+    longitudBusqueda = busqueda.size();
+    longitudPalabra = palabra.size();
+    izquierda = 0;
+    derecha = longitudPalabra - 1;
 
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        string tempStr = mainString.substr(suffArr[mid]);
-        int result = strCompare(pattern, tempStr, patLen);
+    while (izquierda <= derecha) {
 
-        if (result == 0) {    //the pattern is found
-            (*index)++;
-            array[(*index)] = suffArr[mid];
+        int medio = izquierda + (derecha - izquierda) / 2;
+        string stringAuxiliar = palabra.substr(arregloSufijos[medio].indice);
+        int resultado = comparacionStrings(busqueda, stringAuxiliar, longitudBusqueda);
+
+        if (resultado == 0) {
+            (*indice)++;
+            arregloBusqueda[(*indice)] = arregloSufijos[medio].indice;
         }
 
-        if (result < 0)
-            right = mid - 1;
-        else
-            left = mid + 1;
+        if (resultado < 0) {
+            derecha = medio - 1;
+        }
+        else {
+            izquierda = medio + 1;
+        }
     }
 }
 
 //Función que implementa la impresión de un Arreglo, recibe el arreglo y su tamaño m, no tiene valor de retorno.
-void mostrarArreglo(int arreglo[], int n) {
+void mostrarArreglo(sufijo arreglo[], int n) {
     for (int k = 0; k < n; k++) {
-        cout << arreglo[k] << " ";
+        cout << arreglo[k].indice << " " << arreglo[k].sufi << endl;
     }
     espacio();
 }
@@ -104,31 +120,31 @@ int main() {
     cin >> busqueda;
 
     //Creación e impresión del Arreglo de sufijos.
-    int suffArr[palabra.size()];
-    fillSuffixArray(palabra, suffArr);
+    sufijo arregloSufijos[palabra.size()];
+    arregloDeSufijos(palabra, arregloSufijos);
     espacio();
     cout << "ARREGLO DE SUFIJOS GENERADO:" << endl;
-    mostrarArreglo(suffArr, palabra.length());
+    mostrarArreglo(arregloSufijos, palabra.length());
     espacio();
 
     //Muestra del Índice del Patrón buscado.
 
-    int locArray[palabra.size()];
+    int arregloBusqueda[palabra.size()];
     int index = -1;
-    suffixArraySearch(palabra, busqueda, suffArr, locArray, &index);
+    buscar(palabra, busqueda, arregloSufijos, arregloBusqueda, &index);
 
-    if (index == -1){
+    if (index == -1) {
         cout << "INDICE DE LA BUSQUEDA: " << endl;
         cout << "PATRON NO ENCONTRADO!!!" << endl;
         espacio();
     }
     else {
         for (int i = 0; i <= index; i++) {
-            cout << "INDICE DE LA BUSQUEDA: " << endl << locArray[i] << endl;
+            cout << "INDICE DE LA BUSQUEDA: " << endl << arregloBusqueda[i] << endl;
         }
         espacio();
     }
-  
+
     //Finaliza el programa.
     return 0;
 }
