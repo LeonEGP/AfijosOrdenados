@@ -28,7 +28,7 @@ int comparacionStrings(string string1, string string2) { //Complejidad Computaci
     i = 0;
     n = string1.size();
 
-    for (int i = n; i >= 0; i--){
+    for (int m = n; m > 0; m--){
         if (string1[i] != string2[i]) {
             return string1[i] - string2[i];
         }
@@ -106,7 +106,7 @@ void mostrarArreglo(sufijo arreglo[], int n) { //Complejidad Computacional: O(n)
 }
 
 //Función main de ejecución del programa, no recibe valores, retorna un valor 0 al finalizar la ejecución.
-int main() { //Complejidad Computacional O(1).
+int main() { //Complejidad Computacional: O(1).
 
     //Inicia el programa.
     espacio();
