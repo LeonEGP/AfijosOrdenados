@@ -22,7 +22,7 @@ struct sufijo {
 };
 
 //Función auxiliar para la comparación de dos strings, recibe dos strings, y retorna un valor entero. 
-int comparacionStrings(string string1, string string2) { //Complejidad Computacional: O(n), donde n es el tamaño del primer string. 
+int comparacionStrings(string string1, string string2) { //Complejidad Computacional: O(m), donde m es el tamaño del primer string. 
     int i;
     int n;
     i = 0;
