@@ -81,7 +81,7 @@ void buscar(string palabra, string busqueda, sufijo arregloSufijos[], int arregl
 
         int medio = izquierda + (derecha - izquierda) / 2;
         string stringAuxiliar = palabra.substr(arregloSufijos[medio].indice);
-        int resultado = comparacionStrings(busqueda, stringAuxiliar);
+        int resultado = comparacionStrings(busqueda, stringAuxiliar); //Complejidad O(m), siendo m el tamaño del string "busqueda". Por esta comparación, aumenta la complejidad base de O(log n) de una Búsqueda Binaria Normal.
 
         if (resultado == 0) {
             (*indice)++;
