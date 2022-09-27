@@ -34,9 +34,9 @@ int comparacion(sufijo a, sufijo b) {
 
 
 //Función que crea el Arreglo de Sufijos de una palabra dada, también tomo como parámetro el tamaño n de la misma y retorna el Arreglo de Sufijos.
-int* arregloDeSufijos(char* palabra, int n) {
+sufijo* arregloDeSufijos(char* palabra, int n) {
 
-	struct sufijo sufijos[n];
+	sufijo sufijos[n];
 
 	for (int i = 0; i < n; i++) {
 		sufijos[i].indice = i;
@@ -45,25 +45,26 @@ int* arregloDeSufijos(char* palabra, int n) {
 
 	sort(sufijos, sufijos + n, comparacion);
 
-	int* arregloSufijos = new int[n];
+	sufijo* arregloSufijos = new sufijo[n];
 
 	for (int j = 0; j < n; j++) {
-		arregloSufijos[j] = sufijos[j].indice;
+		arregloSufijos[j].indice = sufijos[j].indice;
+		arregloSufijos[j].sufijo = sufijos[j].sufijo;
 	}
 
 	return  arregloSufijos;
 }
 
 //Función que implementa la impresión de un Arreglo, recibe el arreglo y su tamaño m, no tiene valor de retorno.
-void mostrarArreglo(int arreglo[], int n) {
+void mostrarArreglo(sufijo arreglo[], int n) {
 	for (int k = 0; k < n; k++) {
-		cout << arreglo[k] << " ";
+		cout << arreglo[k].indice << " " << arreglo[k].sufijo << endl;
 	}
 	espacio();
 }
 
 //Función que implementa la busqueda binaria sobre el Arreglo de Sufijos, recibe el arreglo de la búsqueda, el de la palábra, recibe el Arreglo de Sufijos y las longitudes de la palábra búsqueda, n y m (respectivamente).
-void buscar(char* busqueda, char* palabra, int* arregloSufijos, int n, int m) {
+void buscar(char* busqueda, char* palabra, sufijo* arregloSufijos, int n, int m) {
 
 	int izquierda;
 	int derecha;
@@ -73,10 +74,10 @@ void buscar(char* busqueda, char* palabra, int* arregloSufijos, int n, int m) {
 	while (izquierda <= derecha) {
 
 		int medio = izquierda + (derecha - izquierda) / 2;
-		int resultado = strncmp(busqueda, palabra + arregloSufijos[medio], m);
+		int resultado = strncmp(busqueda, palabra + arregloSufijos[medio].indice, m);
 
 		if (resultado == 0) {
-			cout << arregloSufijos[medio] << endl;
+			cout << arregloSufijos[medio].indice << endl;
 			return;
 		}
 
@@ -117,10 +118,9 @@ int main() {
 	espacio();
 
 	//Creación e impresión del Arreglo de sufijos.
-	int* arregloSufijos = arregloDeSufijos(plb, n);
+	sufijo* arregloSufijos = arregloDeSufijos(plb, n);
 	cout << "ARREGLO DE SUFIJOS GENERADO:" << endl;
 	mostrarArreglo(arregloSufijos, n);
-	espacio();
 
 	//Muestra del Índice del Patrón buscado.
 	cout << "INDICE DE LA BUSQUEDA:" << endl;

@@ -58,7 +58,7 @@ void arregloDeSufijos(string palabra, sufijo arregloSufijos[]) {
     sort(sufijos, sufijos + n, comparacionSufijos);
 
     for (int j = 0; j < n; j++) {
-        arregloSufijos[j].indice= sufijos[j].indice;
+        arregloSufijos[j].indice = sufijos[j].indice;
         arregloSufijos[j].sufi = sufijos[j].sufi;
     }
 }
