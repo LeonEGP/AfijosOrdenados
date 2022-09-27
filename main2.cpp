@@ -33,7 +33,7 @@ int strCompare(string st1, string st2, int n) {
 }
 
 //Funciónn que compara dos strings, recibe dos estructuras sufijo, y retorna un valor booleano. 
-bool comp(suffix suff1, suffix suff2) {     //compare two strings for sorting
+bool comp(suffix suff1, suffix suff2) {
     if (suff1.suff < suff2.suff)
         return true;
     return false;
@@ -42,16 +42,17 @@ bool comp(suffix suff1, suffix suff2) {     //compare two strings for sorting
 //Función que crea el Arreglo de Sufijos de una palabra dada, también tomo como parámetro el tamaño n de la misma y retorna el Arreglo de Sufijos.
 void fillSuffixArray(string mainString, int suffArr[]) {
     int n = mainString.size();
-    suffix allSuffix[n];    //array to hold all suffixes
+    suffix allSuffix[n];
 
     for (int i = 0; i < n; i++) {
         allSuffix[i].index = i;
-        allSuffix[i].suff = mainString.substr(i);    //from ith position to end
+        allSuffix[i].suff = mainString.substr(i);
     }
 
     sort(allSuffix, allSuffix + n, comp);
-    for (int i = 0; i < n; i++)
-        suffArr[i] = allSuffix[i].index;    //indexes of all sorted suffix
+    for (int i = 0; i < n; i++){
+        suffArr[i] = allSuffix[i].index;
+    }
 }
 
 //Función que implementa la busqueda binaria sobre el Arreglo de Sufijos, recibe el arreglo de la búsqueda, el de la palábra, recibe el Arreglo de Sufijos y las longitudes de la palábra búsqueda, n y m (respectivamente).
