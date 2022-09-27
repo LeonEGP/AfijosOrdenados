@@ -11,19 +11,23 @@
 using namespace std;
 
 //Función que imprime un espacio en consola, no recibe valores, no tiene valor de retorno.
-void espacio() {
+void espacio() { //Complejidad Computacional: O(1).
     cout << endl;
 }
 
-//Creación de la Estructura "Sufijo".
+//Creación de la Estructura "Sufijo", que consta de un entero índice y un string con el sufijo.
 struct sufijo {
     int indice;
     string sufi;
 };
 
-//Función auxiliar para la comparación de dos strings, recibe dos strings, un valor entero n y retorna un valor entero. 
-int comparacionStrings(string string1, string string2, int n) {
-    int i = 0;
+//Función auxiliar para la comparación de dos strings, recibe dos strings, y retorna un valor entero. 
+int comparacionStrings(string string1, string string2) { //Complejidad Computacional: O(n), donde n es el tamaño del primer string. 
+    int i;
+    int n;
+    i = 0;
+    n = string1.size();
+
     while (n--) {
         if (string1[i] != string2[i]) {
             return string1[i] - string2[i];
@@ -35,8 +39,8 @@ int comparacionStrings(string string1, string string2, int n) {
     return 0;
 }
 
-//Función que compara dos strings, recibe dos estructuras sufijo, y retorna un valor booleano. 
-bool comparacionSufijos(sufijo sufijo1, sufijo sufijo2) {
+//Función que compara dos sufijos, recibe dos estructuras sufijo, y retorna un valor booleano. 
+bool comparacionSufijos(sufijo sufijo1, sufijo sufijo2) { //Complejidad Computacional: O(k), donde K es la longitud máxima del sufijo (string) proporcionado.
     if (sufijo1.sufi < sufijo2.sufi) {
         return true;
     }
@@ -45,8 +49,8 @@ bool comparacionSufijos(sufijo sufijo1, sufijo sufijo2) {
     }
 }
 
-//Función que crea el Arreglo de Sufijos de una palabra dada, también tomo como parámetro el tamaño n de la misma y retorna el Arreglo de Sufijos.
-void arregloDeSufijos(string palabra, sufijo arregloSufijos[]) {
+//Función que crea el Arreglo de Sufijos de una palabra dada (recibe un string), también toma como parámetro el Arreglo de Sufijos en el que se almacenará el resultado, no tiene valor de retorno.
+void arregloDeSufijos(string palabra, sufijo arregloSufijos[]) { //Complejidad Computacional: O(n k log n). Donde n es el tamaño del string, y k es la longitud máxima de string en el arreglo dado.
     int n = palabra.size();
     sufijo sufijos[n];
 
@@ -55,7 +59,7 @@ void arregloDeSufijos(string palabra, sufijo arregloSufijos[]) {
         sufijos[i].sufi = palabra.substr(i);
     }
 
-    sort(sufijos, sufijos + n, comparacionSufijos);
+    sort(sufijos, sufijos + n, comparacionSufijos); //Complejidad de Algoritmo de Ordenamiento: O(n log n). Así mismo, la comparación de dos strings tiene una complejidad de O(k), donde K es la longitud máxima del sufijo (string) proporcionado.
 
     for (int j = 0; j < n; j++) {
         arregloSufijos[j].indice = sufijos[j].indice;
@@ -63,13 +67,11 @@ void arregloDeSufijos(string palabra, sufijo arregloSufijos[]) {
     }
 }
 
-//Función que implementa la busqueda binaria sobre el Arreglo de Sufijos, recibe el arreglo de la búsqueda, el de la palábra, recibe el Arreglo de Sufijos y las longitudes de la palábra búsqueda, n y m (respectivamente).
-void buscar(string palabra, string busqueda, sufijo arregloSufijos[], int arregloBusqueda[], int* indice) {
-    int longitudBusqueda;
+//Función que implementa una adaptación de la busqueda binaria sobre el Arreglo de Sufijos, recibe el string de búsqueda, el string palabra, recibe el Arreglo de Sufijos, el Arreglo de Búsqueda y un apuntador de entero índice. No tiene valor de retorno.
+void buscar(string palabra, string busqueda, sufijo arregloSufijos[], int arregloBusqueda[], int* indice) { //Complejidad Computacional: O(m log n), siendo n el tamaño del string "palabra" y m el tamaño del string "busqueda".
     int longitudPalabra;
     int izquierda;
     int derecha;
-    longitudBusqueda = busqueda.size();
     longitudPalabra = palabra.size();
     izquierda = 0;
     derecha = longitudPalabra - 1;
@@ -78,7 +80,7 @@ void buscar(string palabra, string busqueda, sufijo arregloSufijos[], int arregl
 
         int medio = izquierda + (derecha - izquierda) / 2;
         string stringAuxiliar = palabra.substr(arregloSufijos[medio].indice);
-        int resultado = comparacionStrings(busqueda, stringAuxiliar, longitudBusqueda);
+        int resultado = comparacionStrings(busqueda, stringAuxiliar);
 
         if (resultado == 0) {
             (*indice)++;
@@ -94,8 +96,8 @@ void buscar(string palabra, string busqueda, sufijo arregloSufijos[], int arregl
     }
 }
 
-//Función que implementa la impresión de un Arreglo, recibe el arreglo y su tamaño m, no tiene valor de retorno.
-void mostrarArreglo(sufijo arreglo[], int n) {
+//Función que imprime un Arreglo de Sufijos, recibe el arreglo y su tamaño n, no tiene valor de retorno.
+void mostrarArreglo(sufijo arreglo[], int n) { //Complejidad Computacional: O(n), donde n es el tamaño del arreglo.
     for (int k = 0; k < n; k++) {
         cout << arreglo[k].indice << " " << arreglo[k].sufi << endl;
     }
@@ -103,7 +105,7 @@ void mostrarArreglo(sufijo arreglo[], int n) {
 }
 
 //Función main de ejecución del programa, no recibe valores, retorna un valor 0 al finalizar la ejecución.
-int main() {
+int main() { //Complejidad Computacional O(1).
 
     //Inicia el programa.
     espacio();
@@ -125,7 +127,6 @@ int main() {
     espacio();
     cout << "ARREGLO DE SUFIJOS GENERADO:" << endl;
     mostrarArreglo(arregloSufijos, palabra.length());
-    espacio();
 
     //Muestra del Índice del Patrón buscado.
 
