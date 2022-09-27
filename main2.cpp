@@ -28,7 +28,7 @@ int comparacionStrings(string string1, string string2) { //Complejidad Computaci
     i = 0;
     n = string1.size();
 
-    while (n--) {
+    for (int i = n; i >= 0; i--){
         if (string1[i] != string2[i]) {
             return string1[i] - string2[i];
         }
@@ -36,6 +36,7 @@ int comparacionStrings(string string1, string string2) { //Complejidad Computaci
             i++;
         }
     }
+
     return 0;
 }
 
