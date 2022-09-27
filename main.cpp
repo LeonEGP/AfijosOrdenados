@@ -46,7 +46,7 @@ bool comparacionSufijos(sufijo sufijo1, sufijo sufijo2) {
 }
 
 //Función que crea el Arreglo de Sufijos de una palabra dada, también tomo como parámetro el tamaño n de la misma y retorna el Arreglo de Sufijos.
-void arregloDeSufijos(string palabra, int arregloSufijos[]) {
+void arregloDeSufijos(string palabra, sufijo arregloSufijos[]) {
     int n = palabra.size();
     sufijo sufijos[n];
 
@@ -58,12 +58,13 @@ void arregloDeSufijos(string palabra, int arregloSufijos[]) {
     sort(sufijos, sufijos + n, comparacionSufijos);
 
     for (int j = 0; j < n; j++) {
-        arregloSufijos[j] = sufijos[j].indice;
+        arregloSufijos[j].indice= sufijos[j].indice;
+        arregloSufijos[j].sufi = sufijos[j].sufi;
     }
 }
 
 //Función que implementa la busqueda binaria sobre el Arreglo de Sufijos, recibe el arreglo de la búsqueda, el de la palábra, recibe el Arreglo de Sufijos y las longitudes de la palábra búsqueda, n y m (respectivamente).
-void buscar(string palabra, string busqueda, int arregloSufijos[], int arregloBusqueda[], int* indice) {
+void buscar(string palabra, string busqueda, sufijo arregloSufijos[], int arregloBusqueda[], int* indice) {
     int longitudBusqueda;
     int longitudPalabra;
     int izquierda;
@@ -76,12 +77,12 @@ void buscar(string palabra, string busqueda, int arregloSufijos[], int arregloBu
     while (izquierda <= derecha) {
 
         int medio = izquierda + (derecha - izquierda) / 2;
-        string stringAuxiliar = palabra.substr(arregloSufijos[medio]);
+        string stringAuxiliar = palabra.substr(arregloSufijos[medio].indice);
         int resultado = comparacionStrings(busqueda, stringAuxiliar, longitudBusqueda);
 
         if (resultado == 0) {
             (*indice)++;
-            arregloBusqueda[(*indice)] = arregloSufijos[medio];
+            arregloBusqueda[(*indice)] = arregloSufijos[medio].indice;
         }
 
         if (resultado < 0) {
@@ -94,9 +95,9 @@ void buscar(string palabra, string busqueda, int arregloSufijos[], int arregloBu
 }
 
 //Función que implementa la impresión de un Arreglo, recibe el arreglo y su tamaño m, no tiene valor de retorno.
-void mostrarArreglo(int arreglo[], int n) {
+void mostrarArreglo(sufijo arreglo[], int n) {
     for (int k = 0; k < n; k++) {
-        cout << arreglo[k] << " ";
+        cout << arreglo[k].indice << " " << arreglo[k].sufi << endl;
     }
     espacio();
 }
@@ -119,7 +120,7 @@ int main() {
     cin >> busqueda;
 
     //Creación e impresión del Arreglo de sufijos.
-    int arregloSufijos[palabra.size()];
+    sufijo arregloSufijos[palabra.size()];
     arregloDeSufijos(palabra, arregloSufijos);
     espacio();
     cout << "ARREGLO DE SUFIJOS GENERADO:" << endl;
